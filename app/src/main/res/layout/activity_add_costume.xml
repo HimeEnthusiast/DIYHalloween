@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".AddCostume">
+
+    <!-- Image Upload Container   -->
+    <RelativeLayout
+        android:id="@+id/imageSelectContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/costumeImagePreview"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="15dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/uploadImageButton"
+            android:layout_width="218dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_toEndOf="@id/costumeImagePreview"
+            android:text="Upload Image" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/imageURLLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@id/uploadImageButton"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="61dp"
+            android:layout_toEndOf="@id/costumeImagePreview"
+            android:text="Image URL" />
+    </RelativeLayout>
+
+    <!-- Text Input Container   -->
+    <RelativeLayout
+        android:id="@+id/textInputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageSelectContainer"
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeNameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:labelFor="@id/costumeNameInput"
+            android:text="Name" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/costumeNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/costumeNameLabel" />
+
+        <RelativeLayout
+            android:id="@+id/MaterialInputContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/costumeNameInput"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialInputLabel0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:labelFor="@id/materialNameInput0"
+                android:text="Materials" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/materialNameInput0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/materialInputLabel0" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/materialNameInput1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/materialNameInput0"
+                android:visibility="gone" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/materialNameInput2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/materialNameInput1"
+                android:visibility="gone" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/materialNameInput3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/materialNameInput2"
+                android:visibility="gone" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/materialNameInput4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/materialNameInput3"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addMaterialButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/materialNameInput4"
+                android:text="Add Material"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeStepsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/MaterialInputContainer"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:labelFor="@id/costumeStepsInput"
+            android:text="Steps" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/costumeStepsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/costumeStepsLabel"
+            android:inputType="textMultiLine"/>
+
+    </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textInputContainer"
+        android:layout_marginTop="20dp"
+        android:text="Add Costume" />
+
+</RelativeLayout>
+</ScrollView>
