@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".CostumeViewActivity">
+
+    <RelativeLayout
+        android:id="@+id/imageViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/costumeImageView"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="15dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeNameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_toRightOf="@id/costumeImageView"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewContainer"
+        android:layout_marginTop="15dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeMaterialsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Materials" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeMaterialsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/costumeMaterialsLabel"
+            android:layout_marginTop="7dp"
+            android:text="Materials Here"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeStepsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/costumeMaterialsView"
+            android:layout_marginTop="15dp"
+            android:text="Steps" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/costumeStepsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/costumeStepsLabel"
+            android:layout_marginTop="7dp"
+            android:text="Steps Here"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

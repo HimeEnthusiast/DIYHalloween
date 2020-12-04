@@ -1,58 +1,32 @@
 package ca.sheridancollege.diyhalloween
 
-import android.content.Context
+import android.app.Activity
 import android.net.Uri
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import ca.sheridancollege.diyhalloween.models.Costume
+import java.io.ByteArrayInputStream
+import android.graphics.BitmapFactory
 
-class ListAdapter(private var activity: MainActivity, private var costumes: ArrayList<Costume>): BaseAdapter() {
+class ListAdapter(private var context: Activity,
+                  private val name: Array<String>,
+                  private val imageUrl: Array<String>
+)
+    : ArrayAdapter<String>(context, R.layout.list_item_costume, name) {
 
-    private class ViewHolder(row: View?) {
-        var name: TextView? = null
-        var image: ImageView? = null
+    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
+        val inflater = context.layoutInflater
+        val rowView = inflater.inflate(R.layout.list_item_costume, null, true)
 
-        init {
-            this.name = row?.findViewById(R.id.costumeName)
-            this.image = row?.findViewById(R.id.costumeImage)
-        }
-    }
+        val nameText = rowView.findViewById(R.id.costumeName) as TextView
+        val imageView = rowView.findViewById(R.id.costumeImage) as ImageView
 
-    override fun getCount(): Int {
-        return costumes.size
-    }
+        nameText.text = name[position]
+//        imageView.setImageURI(Uri.parse(imageUrl[position]))
+        imageView.setImageResource(R.drawable.bilingual)
 
-    override fun getItem(position: Int): Any {
-        return costumes[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View
-        val viewHolder: ViewHolder
-
-        if(convertView == null) {
-            val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = inflater.inflate(R.layout.list_item_costume, null)
-            viewHolder = ViewHolder(view)
-            view.tag = viewHolder
-        } else {
-            view = convertView
-            viewHolder = ViewHolder(view) as ViewHolder
-        }
-
-        var costume = costumes[position]
-
-        viewHolder.name?.text = costume.name
-        viewHolder.image?.setImageURI(Uri.parse(costume.imageURL))
-
-        return view as View
+        return rowView
     }
 }

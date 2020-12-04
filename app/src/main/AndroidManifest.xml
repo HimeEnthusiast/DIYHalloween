@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYHalloween">
-        <activity android:name=".AddCostume"></activity>
+        <activity android:name=".CostumeViewActivity"></activity>
+        <activity android:name=".AddCostumeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

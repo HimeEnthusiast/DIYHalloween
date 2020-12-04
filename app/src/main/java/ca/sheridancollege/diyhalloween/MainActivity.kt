@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
-import ca.sheridancollege.diyhalloween.models.Costume
+import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -20,28 +20,38 @@ class MainActivity : AppCompatActivity() {
         costumeListView = findViewById<ListView>(R.id.costumeListView)
         val fabButton = findViewById<FloatingActionButton>(R.id.fabAdd)
 
-        //Costumes
-        var costumes: ArrayList<Costume> = ArrayList()
-        costumes.add(Costume("Joker", "android.resource://" + this.packageName + "/" + R.drawable.bilingual, "Do some makeup", ArrayList()))
-
-        loadCostumes(costumes)
+        loadCostumes()
 
         //Add Costume button
         fabButton.setOnClickListener {
             goAddCostume()
         }
+
+        costumeListView.setOnItemClickListener { _, _, _, id ->
+            val intent = Intent(this@MainActivity, CostumeViewActivity::class.java)
+            intent.putExtra("itemId", id.toString())
+            startActivity(intent)
+        }
     }
 
-    /**
-     * Loads all costumes into the list
-     */
-    private fun loadCostumes(array: ArrayList<Costume>) {
-        val adapter = ListAdapter(this, array)
+    private fun loadCostumes() {
+        val databaseHandler = DatebaseHandler(this)
+        val costumeList = databaseHandler.viewAllCostumes()
+        val costumeArrayName = Array<String>(costumeList.size){"null"}
+        val costumeArrayImageUrl = Array<String>(costumeList.size){"null"}
+
+
+        for ((index, c) in costumeList.withIndex()) {
+            costumeArrayName[index] = c.name
+            costumeArrayImageUrl[index] = c.imageUrl
+        }
+
+        val adapter = ListAdapter(this, costumeArrayName, costumeArrayImageUrl)
         costumeListView.adapter = adapter
     }
 
     private fun goAddCostume() {
-        val intent = Intent(this@MainActivity, AddCostume::class.java)
+        val intent = Intent(this@MainActivity, AddCostumeActivity::class.java)
         startActivity(intent)
     }
 }

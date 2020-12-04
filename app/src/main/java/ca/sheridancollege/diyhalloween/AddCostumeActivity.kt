@@ -2,8 +2,10 @@ package ca.sheridancollege.diyhalloween
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,21 +13,25 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ca.sheridancollege.diyhalloween.models.Costume
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 
-class AddCostume : AppCompatActivity() {
+class AddCostumeActivity : AppCompatActivity() {
 
-    lateinit var material0: TextInputEditText
-    lateinit var material1: TextInputEditText
-    lateinit var material2: TextInputEditText
-    lateinit var material3: TextInputEditText
-    lateinit var material4: TextInputEditText
-    lateinit var photoPreview: ShapeableImageView
-    lateinit var imageURILabel: MaterialTextView
+    private lateinit var material0: TextInputEditText
+    private lateinit var material1: TextInputEditText
+    private lateinit var material2: TextInputEditText
+    private lateinit var material3: TextInputEditText
+    private lateinit var material4: TextInputEditText
+    private lateinit var photoPreview: ShapeableImageView
+    private lateinit var imageURILabel: MaterialTextView
+    private lateinit var costumeNameInput: TextInputEditText
+    private lateinit var costumeStepsInput: TextInputEditText
+    private var materialInputArray: ArrayList<TextInputEditText> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +39,18 @@ class AddCostume : AppCompatActivity() {
 
         val choosePhotoButton = findViewById<MaterialButton>(R.id.uploadImageButton)
         val addMaterialButton = findViewById<MaterialButton>(R.id.addMaterialButton)
+        val costumeSubmitButton = findViewById<MaterialButton>(R.id.costumeSubmitButton)
+
         material0 = findViewById<TextInputEditText>(R.id.materialNameInput0)
         material1 = findViewById<TextInputEditText>(R.id.materialNameInput1)
         material2 = findViewById<TextInputEditText>(R.id.materialNameInput2)
         material3 = findViewById<TextInputEditText>(R.id.materialNameInput3)
         material4 = findViewById<TextInputEditText>(R.id.materialNameInput4)
+
         photoPreview = findViewById<ShapeableImageView>(R.id.costumeImagePreview)
         imageURILabel = findViewById<MaterialTextView>(R.id.imageURLLabel)
+        costumeNameInput = findViewById(R.id.costumeNameInput)
+        costumeStepsInput = findViewById(R.id.costumeStepsInput)
 
         var button: Int = 1
 
@@ -72,6 +83,10 @@ class AddCostume : AppCompatActivity() {
                 ActivityCompat.requestPermissions(
                     this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
             }
+        }
+
+        costumeSubmitButton.setOnClickListener {
+            saveCostume()
         }
     }
 
@@ -113,4 +128,57 @@ class AddCostume : AppCompatActivity() {
             }
         }
     }
+
+    private fun saveCostume() {
+        var materialArray: ArrayList<String> = ArrayList()
+        materialInputArray.addAll(listOf(material0,
+            material1,
+            material2,
+            material3,
+            material4))
+
+        for (i in materialInputArray) {
+            if (i.text.toString().isNotEmpty()) {
+                materialArray.add(i.text.toString())
+            }
+        }
+
+        val name = costumeNameInput.text.toString()
+        val materials = materialArray
+        val steps = costumeStepsInput.text.toString()
+        val imageUrl = imageURILabel.text.toString()
+        val datebaseHandler = DatebaseHandler(this)
+
+        if(name.trim() != "" && steps.trim() != "" && imageUrl.trim() != "" && !materials.isNullOrEmpty()) {
+            val status = datebaseHandler.addCostume(Costume(name, imageUrl, steps, materials))
+            if (status > -1) {
+                Toast.makeText(applicationContext, "Costume saved successfully.", Toast.LENGTH_LONG).show()
+                costumeNameInput.text?.clear()
+                costumeStepsInput.text?.clear()
+                imageURILabel.text = ""
+
+                for (i in materialInputArray) {
+                    i.text?.clear()
+                }
+            } else {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle("Error")
+                    .setMessage(status.toString())
+                    .setNeutralButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .show()
+            }
+        } else {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Error")
+                .setMessage("Please fill all fields.")
+                .setNeutralButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+                .show()
+        }
+    }
+
+
 }
